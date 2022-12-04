@@ -1,22 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataBaseOfEmployees {
+public class DatabaseOfEmployees {
     private List<Employee> employees;
 
-    public DataBaseOfEmployees() {
+    public DatabaseOfEmployees() {
         this.employees = new ArrayList<>();
-    }
-
-    public void showAllEmployees(){
-        if(!employees.isEmpty()){
-            for(Employee employee : employees){
-                System.out.println("Имя: " + employee.getName() + employee.getSurname() + " должность: " + employee.getPost());
-            }
-        }
-        else {
-            System.out.println("База данных пуста");
-        }
     }
 
     private List<Employee> getEmployeesWithMinSalary(){
@@ -31,11 +20,10 @@ public class DataBaseOfEmployees {
             }
 
             for(Employee employee : employees){
-                if(employee.equals(employee.getSalary() == minValue)){
+                if(employee.getSalary() == minValue){
                     employeesWithMinSalary.add(employee);
                 }
             }
-
             return employeesWithMinSalary;
         }
         else {
@@ -56,7 +44,7 @@ public class DataBaseOfEmployees {
             }
 
             for(Employee employee : employees){
-                if(employee.equals(employee.getSalary() == maxValue)){
+                if(employee.getSalary() == maxValue){
                     employeesWithMaxSalary.add(employee);
                 }
             }
@@ -81,6 +69,17 @@ public class DataBaseOfEmployees {
         return sumAllSalary;
     }
 
+    public void showAllEmployees(){
+        if(!employees.isEmpty()){
+            for(Employee employee : employees){
+                System.out.println("Имя: " + employee.getName() + " " + employee.getSurname() + " должность: " + employee.getPost());
+            }
+        }
+        else {
+            System.out.println("База данных пуста");
+        }
+    }
+
     public void showEmployeesWithMinSalary(){
         List<Employee> employeesWithMinSalary = new ArrayList<>();
 
@@ -88,8 +87,8 @@ public class DataBaseOfEmployees {
 
         if (!employeesWithMinSalary.isEmpty()){
             for(Employee employee : employeesWithMinSalary){
-                System.out.println("Имя: " + employee.getName() + employee.getSurname() +
-                        "Должность: " + employee.getPost() + "Зарплата: " + employee.getSalary());
+                System.out.println("Имя: " + employee.getName() + " " + employee.getSurname() +
+                        "Должность: " + employee.getPost() + " Зарплата: " + employee.getSalary());
             }
         }
     }
@@ -100,8 +99,8 @@ public class DataBaseOfEmployees {
 
         if (!employeesWithMaxSalary.isEmpty()){
             for(Employee employee : employeesWithMaxSalary){
-                System.out.println("Имя: " + employee.getName() + employee.getSurname() +
-                        "Должность: " + employee.getPost() + "Зарплата: " + employee.getSalary());
+                System.out.println("Имя: " + employee.getName() + " " + employee.getSurname() +
+                        "Должность: " + employee.getPost() + " Зарплата: " + employee.getSalary());
             }
         }
     }
@@ -111,10 +110,14 @@ public class DataBaseOfEmployees {
         System.out.println("Общая сумма заработных плат в месяц составляет: " + sumAllSalary);
     }
 
-    public void showAvarageAmountAllSalary(){
+    public void showAverageAmountAllSalary(){
         float sumAllSalary = getSumAllSalary();
-        float avarageAmountAllSalary = sumAllSalary / employees.size();
+        float averageAmountAllSalary = sumAllSalary / employees.size();
 
-        System.out.println("Средняя сумма всех заработных плат в месяц составляет: " + avarageAmountAllSalary);
+        System.out.println("Средняя сумма всех заработных плат в месяц составляет: " + averageAmountAllSalary);
+    }
+
+    public void addEmployee(Employee employee){
+        employees.add(employee);
     }
 }
