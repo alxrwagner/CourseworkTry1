@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DatabaseOfEmployees {
     private List<Employee> employees;
@@ -11,13 +13,9 @@ public class DatabaseOfEmployees {
     private List<Employee> getEmployeesWithMinSalary(){
         if(!employees.isEmpty()){
             List<Employee> employeesWithMinSalary = new ArrayList<>();
-            float minValue = employees.get(0).getSalary();
-
-            for(int counter = 0; counter < employees.size(); counter++){
-                if(employees.get(counter).getSalary() < minValue){
-                    minValue = employees.get(counter).getSalary();
-                }
-            }
+            float minValue = employees.stream()
+                    .min(Comparator.comparing(Employee::getSalary))
+                    .get().getSalary();
 
             for(Employee employee : employees){
                 if(employee.getSalary() == minValue){
@@ -35,13 +33,8 @@ public class DatabaseOfEmployees {
     private List<Employee> getEmployeesWithMaxSalary(){
         if(!employees.isEmpty()){
             List<Employee> employeesWithMaxSalary = new ArrayList<>();
-            float maxValue = employees.get(0).getSalary();
-
-            for(int counter = 0; counter < employees.size(); counter++){
-                if(employees.get(counter).getSalary() > maxValue){
-                    maxValue = employees.get(counter).getSalary();
-                }
-            }
+            float maxValue = employees.stream()
+                    .max(Comparator.comparing(Employee::getSalary)).get().getSalary();
 
             for(Employee employee : employees){
                 if(employee.getSalary() == maxValue){
@@ -58,6 +51,7 @@ public class DatabaseOfEmployees {
 
     private float getSumAllSalary(){
         float sumAllSalary = 0f;
+
         if (!employees.isEmpty()){
             for (Employee employee : employees){
                 sumAllSalary += employee.getSalary();
@@ -72,7 +66,7 @@ public class DatabaseOfEmployees {
     public void showAllEmployees(){
         if(!employees.isEmpty()){
             for(Employee employee : employees){
-                System.out.println("Имя: " + employee.getName() + " " + employee.getSurname() + " должность: " + employee.getPost());
+                System.out.printf("Имя: %s %s | Должность: %s%n", employee.getName(), employee.getSurname(), employee.getPost());
             }
         }
         else {
@@ -87,8 +81,8 @@ public class DatabaseOfEmployees {
 
         if (!employeesWithMinSalary.isEmpty()){
             for(Employee employee : employeesWithMinSalary){
-                System.out.println("Имя: " + employee.getName() + " " + employee.getSurname() +
-                        "Должность: " + employee.getPost() + " Зарплата: " + employee.getSalary());
+                System.out.printf("Имя: %s %s | Должность: %s | Зарплата: %.2f рублей%n", employee.getName(), employee.getSurname(),
+                        employee.getPost(), employee.getSalary());
             }
         }
     }
@@ -99,22 +93,22 @@ public class DatabaseOfEmployees {
 
         if (!employeesWithMaxSalary.isEmpty()){
             for(Employee employee : employeesWithMaxSalary){
-                System.out.println("Имя: " + employee.getName() + " " + employee.getSurname() +
-                        "Должность: " + employee.getPost() + " Зарплата: " + employee.getSalary());
+                System.out.printf("Имя: %s %s | Должность: %s | Зарплата: %.2f рублей%n", employee.getName(), employee.getSurname(),
+                        employee.getPost(), employee.getSalary());
             }
         }
     }
 
     public void showSumAllSalary(){
         float sumAllSalary = getSumAllSalary();
-        System.out.println("Общая сумма заработных плат в месяц составляет: " + sumAllSalary);
+        System.out.printf("Общая сумма заработных плат в месяц составляет: %.2f рублей%n", sumAllSalary);
     }
 
     public void showAverageAmountAllSalary(){
         float sumAllSalary = getSumAllSalary();
         float averageAmountAllSalary = sumAllSalary / employees.size();
 
-        System.out.println("Средняя сумма всех заработных плат в месяц составляет: " + averageAmountAllSalary);
+        System.out.printf("Средняя сумма всех заработных плат в месяц составляет: %.2f рублей%n", averageAmountAllSalary);
     }
 
     public void addEmployee(Employee employee){

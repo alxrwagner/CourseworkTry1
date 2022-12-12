@@ -15,31 +15,15 @@ public class Employee {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getSurname() {
         return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public String getPost() {
         return post;
     }
 
-    public void setPost(String post) {
-        this.post = post;
-    }
-
     public float getSalary() {
         return salary;
-    }
-
-    public void setSalary(float salary) {
-        this.salary = salary;
     }
 }

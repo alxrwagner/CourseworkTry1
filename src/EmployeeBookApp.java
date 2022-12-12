@@ -1,6 +1,6 @@
 import java.util.Scanner;
 public class EmployeeBookApp {
-    private DatabaseOfEmployees dataBaseOfEmployee;
+    private final DatabaseOfEmployees dataBaseOfEmployee;
     Scanner input = new Scanner(System.in);
 
     public EmployeeBookApp() {
