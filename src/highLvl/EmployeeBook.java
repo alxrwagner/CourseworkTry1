@@ -5,13 +5,13 @@ import java.util.Comparator;
 import java.util.List;
 
 public class EmployeeBook {
-    List<Employee> employees;
+    private List<Employee> employees;
 
     public EmployeeBook() {
         this.employees = new ArrayList<>();
     }
 
-    private List<Employee> getEmployeesOfDepartment(int department) {
+    private List<Employee> getEmployees(int department) {
         List<Employee> employeesOfDepartment = new ArrayList<>();
 
         for (Employee employee : employees) {
@@ -22,16 +22,14 @@ public class EmployeeBook {
         return employeesOfDepartment;
     }
 
-    private List<Employee> getEmployeesWithMinSalaryOfDepartment(int department) {
+    private List<Employee> getEmployeesWithMinSalary(List<Employee> selectedEmployees) {
+        List<Employee> employeesWithMinSalary = new ArrayList<>();
         if (!employees.isEmpty()) {
-            List<Employee> employeesOfDepartment = getEmployeesOfDepartment(department);
-            List<Employee> employeesWithMinSalary = new ArrayList<>();
-
-            float minValue = employeesOfDepartment.stream()
+            float minValue = selectedEmployees.stream()
                     .min(Comparator.comparing(Employee::getSalary))
                     .get().getSalary();
 
-            for (Employee employee : employeesOfDepartment) {
+            for (Employee employee : selectedEmployees) {
                 if (employee.getSalary() == minValue) {
                     employeesWithMinSalary.add(employee);
                 }
@@ -43,16 +41,13 @@ public class EmployeeBook {
         }
     }
 
-
-    private List<Employee> getEmployeesWithMaxSalaryOfDepartment(int department) {
+    private List<Employee> getEmployeesWithMaxSalary(List<Employee> selectedEmployees) {
+        List<Employee> employeesWithMaxSalary = new ArrayList<>();
         if (!employees.isEmpty()) {
-            List<Employee> employeesOfDepartment = getEmployeesOfDepartment(department);
-            List<Employee> employeesWithMaxSalary = new ArrayList<>();
-
-            float maxValue = employeesOfDepartment.stream()
+            float maxValue = selectedEmployees.stream()
                     .max(Comparator.comparing(Employee::getSalary)).get().getSalary();
 
-            for (Employee employee : employeesOfDepartment) {
+            for (Employee employee : selectedEmployees) {
                 if (employee.getSalary() == maxValue) {
                     employeesWithMaxSalary.add(employee);
                 }
@@ -120,9 +115,8 @@ public class EmployeeBook {
     }
 
     public void showEmployeesWithMinSalaryOfDepartment(int department) {
-        List<Employee> employeesWithMinSalary;
-
-        employeesWithMinSalary = getEmployeesWithMinSalaryOfDepartment(department);
+        List<Employee> employeesOfDepartment = getEmployees(department);
+        List<Employee> employeesWithMinSalary = getEmployeesWithMinSalary(employeesOfDepartment);
 
         if (!employeesWithMinSalary.isEmpty()) {
             System.out.println("Сотрудники с минимальной заработной платой: ");
@@ -135,9 +129,8 @@ public class EmployeeBook {
     }
 
     public void showEmployeesWithMaxSalaryOfDepartment(int department) {
-        List<Employee> employeesWithMaxSalary;
-
-        employeesWithMaxSalary = getEmployeesWithMaxSalaryOfDepartment(department);
+        List<Employee> employeesOfDepartment = getEmployees(department);
+        List<Employee> employeesWithMaxSalary = getEmployeesWithMaxSalary(employeesOfDepartment);
 
         if (!employeesWithMaxSalary.isEmpty()) {
             System.out.println("Сотрудники с максимальной заработной платой: ");
@@ -155,7 +148,7 @@ public class EmployeeBook {
 
     public void fillDatabase() {
         addEmployee("Анатолий", "Мамонов", "Васильевич", 1, 60000);
-        addEmployee("Галина", "Шварц", "Александровна", 2, 150000);
+        addEmployee("Галина", "Шварц", "Александровна", 5, 150000);
         addEmployee("Сергей", "Никифоров", "Николаевич", 3, 100000);
         addEmployee("Евгения", "Кулеш", "Валерьевна", 4, 90000);
         addEmployee("Александр", "Минин", "Александрович", 5, 60000);
@@ -163,7 +156,7 @@ public class EmployeeBook {
         addEmployee("Николай", "Савченко", "Юрьевич", 2, 150000);
         addEmployee("Лидия", "Александрова", "Степановна", 3, 200000);
         addEmployee("Наталья", "Кравцова", "Николаевна", 4, 90000);
-        addEmployee("Петр", "Иванов", "Васильевич", 5, 70000);
+        addEmployee("Петр", "Иванов", "Васильевич", 2, 70000);
     }
 
     public void showEmployeesWithSalaryLessAmount(float amountThreshold) {
@@ -205,7 +198,7 @@ public class EmployeeBook {
     public void removeEmployee(int id) {
         Employee employee = searchEmployeeById(id);
 
-        if (employee != null){
+        if (employee != null) {
             employees.remove(employee);
             System.out.printf("Сотрудник с ID %d был удален.%n", id);
         }
@@ -213,11 +206,77 @@ public class EmployeeBook {
 
     public void changeSalary(int id, float newSalary) {
         Employee employee = searchEmployeeById(id);
-        employee.setSalary(newSalary);
+        if (employee != null) {
+            employee.setSalary(newSalary);
+        }
     }
 
-    public void changeDepartment(int id, int newDepartment){
+    public void changeDepartment(int id, int newDepartment) {
         Employee employee = searchEmployeeById(id);
-        employee.setDepartment(newDepartment);
+        if (employee != null) {
+            employee.setDepartment(newDepartment);
+        }
+    }
+
+    private float getSumAllSalary() {
+        float sumAllSalary = 0f;
+
+        if (!employees.isEmpty()) {
+            for (Employee employee : employees) {
+                sumAllSalary += employee.getSalary();
+            }
+        } else {
+            System.out.println("База данных пуста");
+        }
+        return sumAllSalary;
+    }
+
+    public void showSumAllSalary() {
+        System.out.printf("Общая сумма заработных плат в месяц составляет: %.2f рублей%n", getSumAllSalary());
+    }
+
+    public void showAllEmployees() {
+        if (!employees.isEmpty()) {
+            for (Employee employee : employees) {
+                System.out.printf("ID: %d Имя: %s %s | Отдел: %d%n", employee.getId(), employee.getName(), employee.getSurname(), employee.getDepartment());
+            }
+        } else {
+            System.out.println("База данных пуста");
+        }
+    }
+
+    public void showEmployeesWithMinSalary() {
+        List<Employee> employeesWithMinSalary;
+
+        employeesWithMinSalary = getEmployeesWithMinSalary(employees);
+
+        if (!employeesWithMinSalary.isEmpty()) {
+            System.out.println("Сотрудники с минимальной заработной платой: ");
+            for (Employee employee : employeesWithMinSalary) {
+                System.out.printf("ID: %d Имя: %s %s | Отдел: %d | Зарплата: %.2f рублей%n", employee.getId(), employee.getName(), employee.getSurname(),
+                        employee.getDepartment(), employee.getSalary());
+            }
+        }
+    }
+
+    public void showEmployeesWithMaxSalary() {
+        List<Employee> employeesWithMaxSalary = new ArrayList<>();
+
+        employeesWithMaxSalary = getEmployeesWithMaxSalary(employees);
+
+        if (!employeesWithMaxSalary.isEmpty()) {
+            System.out.println("Сотрудники с максимальной заработной платой: ");
+            for (Employee employee : employeesWithMaxSalary) {
+                System.out.printf("ID: %d Имя: %s %s | Отдел: %d | Зарплата: %.2f рублей%n", employee.getId(), employee.getName(), employee.getSurname(),
+                        employee.getDepartment(), employee.getSalary());
+            }
+        }
+    }
+
+    public void showAverageAmountAllSalary() {
+        float sumAllSalary = getSumAllSalary();
+        float averageAmountAllSalary = sumAllSalary / employees.size();
+
+        System.out.printf("Средняя сумма всех заработных плат в месяц составляет: %.2f рублей%n", averageAmountAllSalary);
     }
 }

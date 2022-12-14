@@ -4,30 +4,31 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-
 public class Main {
-    public static void main(String[] args) {
-        List<Employee> employees = new ArrayList<>();
-        fillDatabase(employees);
 
-        showEmployeesWithMinSalaryOfDepartment(employees, 1);
+    public static List<Employee> employees = new ArrayList<>();
+    public static void main(String[] args) {
+
+        fillDatabase();
+
+        showEmployeesWithMinSalaryOfDepartment(1);
         System.out.println();
-        showEmployeesWithMaxSalaryOfDepartment(employees, 2);
+        showEmployeesWithMaxSalaryOfDepartment(2);
         System.out.println();
-        showSumAllSalaryOfDepartment(employees, 5);
+        showSumAllSalaryOfDepartment(5);
         System.out.println();
-        showAverageAmountSalaryOfDepartment(employees, 5);
+        showAverageAmountSalaryOfDepartment(5);
         System.out.println();
-        increaseSalaryAllEmployeesOfDepartment(5, employees, 3);
+        increaseSalaryAllEmployeesOfDepartment(5, 3);
         System.out.println();
-        showAllEmployeesOfDepartment(employees, 2);
+        showAllEmployeesOfDepartment(2);
         System.out.println();
-        showEmployeesWithSalaryLessAmount(employees, 100000);
+        showEmployeesWithSalaryLessAmount(100000);
         System.out.println();
-        showEmployeesWithSalaryMoreEqualAmount(employees, 100000);
+        showEmployeesWithSalaryMoreEqualAmount(100000);
     }
 
-    public static void increaseSalaryAllEmployeesOfDepartment(int percentageIncrease, List<Employee> employees, int department) {
+    public static void increaseSalaryAllEmployeesOfDepartment(int percentageIncrease, int department) {
         float increaseAmount;
 
         for (Employee employee : employees) {
@@ -39,7 +40,7 @@ public class Main {
         }
 
     }
-    public static List<Employee> getEmployeesWithMinSalaryOfDepartment(List<Employee> employees, int department) {
+    public static List<Employee> getEmployeesWithMinSalaryOfDepartment(int department) {
         if (!employees.isEmpty()) {
             List<Employee> employeesOfDepartment = new ArrayList<>();
             List<Employee> employeesWithMinSalary = new ArrayList<>();
@@ -65,7 +66,7 @@ public class Main {
         }
     }
 
-    public static List<Employee> getEmployeesWithMaxSalaryOfDepartment(List<Employee> employees, int department) {
+    public static List<Employee> getEmployeesWithMaxSalaryOfDepartment(int department) {
         if (!employees.isEmpty()) {
             List<Employee> employeesOfDepartment = new ArrayList<>();
             List<Employee> employeesWithMaxSalary = new ArrayList<>();
@@ -90,7 +91,7 @@ public class Main {
         }
     }
 
-    public static float getSumAllSalaryOfDepartment(List<Employee> employees, int department) {
+    public static float getSumAllSalaryOfDepartment(int department) {
         float sumAllSalary = 0f;
 
         if (!employees.isEmpty()) {
@@ -105,11 +106,11 @@ public class Main {
         return sumAllSalary;
     }
 
-    public static void showSumAllSalaryOfDepartment(List<Employee> employees, int department) {
-        System.out.printf("Общая сумма заработных плат в месяц составляет: %.2f рублей%n", getSumAllSalaryOfDepartment(employees, department));
+    public static void showSumAllSalaryOfDepartment(int department) {
+        System.out.printf("Общая сумма заработных плат в месяц составляет: %.2f рублей%n", getSumAllSalaryOfDepartment(department));
     }
 
-    public static void showAllEmployeesOfDepartment(List<Employee> employees, int department) {
+    public static void showAllEmployeesOfDepartment(int department) {
         if (!employees.isEmpty()) {
             for (Employee employee : employees) {
                 if (employee.getDepartment() == department) {
@@ -121,10 +122,10 @@ public class Main {
         }
     }
 
-    public static void showEmployeesWithMinSalaryOfDepartment(List<Employee> employees, int department) {
+    public static void showEmployeesWithMinSalaryOfDepartment(int department) {
         List<Employee> employeesWithMinSalary;
 
-        employeesWithMinSalary = getEmployeesWithMinSalaryOfDepartment(employees, department);
+        employeesWithMinSalary = getEmployeesWithMinSalaryOfDepartment(department);
 
         if (!employeesWithMinSalary.isEmpty()) {
             System.out.println("Сотрудники с минимальной заработной платой: ");
@@ -136,10 +137,10 @@ public class Main {
         }
     }
 
-    public static void showEmployeesWithMaxSalaryOfDepartment(List<Employee> employees, int department) {
+    public static void showEmployeesWithMaxSalaryOfDepartment(int department) {
         List<Employee> employeesWithMaxSalary;
 
-        employeesWithMaxSalary = getEmployeesWithMaxSalaryOfDepartment(employees, department);
+        employeesWithMaxSalary = getEmployeesWithMaxSalaryOfDepartment(department);
 
         if (!employeesWithMaxSalary.isEmpty()) {
             System.out.println("Сотрудники с максимальной заработной платой: ");
@@ -151,7 +152,7 @@ public class Main {
         }
     }
 
-    public static float getAverageSalaryOfDepartment(List<Employee> employees, int department) {
+    public static float getAverageSalaryOfDepartment(int department) {
         float averageAmount = 0f;
         for (Employee employee : employees) {
             if (employee.getDepartment() == department) {
@@ -161,28 +162,28 @@ public class Main {
         return averageAmount;
     }
 
-    public static void showAverageAmountSalaryOfDepartment(List<Employee> employees, int department) {
-        System.out.printf("Средняя зарплата по отделу %d: %.2f%n", department, getAverageSalaryOfDepartment(employees, department));
+    public static void showAverageAmountSalaryOfDepartment(int department) {
+        System.out.printf("Средняя зарплата по отделу %d: %.2f%n", department, getAverageSalaryOfDepartment(department));
     }
 
-    public static void addEmployee(List<Employee> employees, Employee employee) {
+    public static void addEmployee(Employee employee) {
         employees.add(employee);
     }
 
-    public static void fillDatabase(List<Employee> employees) {
-        addEmployee(employees, new Employee("Анатолий", "Мамонов", "Васильевич", 1, 60000));
-        addEmployee(employees, new Employee("Галина", "Шварц", "Александровна", 2, 150000));
-        addEmployee(employees, new Employee("Сергей", "Никифоров", "Николаевич", 3, 100000));
-        addEmployee(employees, new Employee("Евгения", "Кулеш", "Валерьевна", 4, 90000));
-        addEmployee(employees, new Employee("Александр", "Минин", "Александрович", 5, 60000));
-        addEmployee(employees, new Employee("Евгений", "Богданов", "Игнатьевич", 1, 70000));
-        addEmployee(employees, new Employee("Николай", "Савченко", "Юрьевич", 2, 150000));
-        addEmployee(employees, new Employee("Лидия", "Александрова", "Степановна", 3, 200000));
-        addEmployee(employees, new Employee("Наталья", "Кравцова", "Николаевна", 4, 90000));
-        addEmployee(employees, new Employee("Петр", "Иванов", "Васильевич", 5, 70000));
+    public static void fillDatabase() {
+        addEmployee(new Employee("Анатолий", "Мамонов", "Васильевич", 1, 60000));
+        addEmployee(new Employee("Галина", "Шварц", "Александровна", 2, 150000));
+        addEmployee(new Employee("Сергей", "Никифоров", "Николаевич", 3, 100000));
+        addEmployee(new Employee("Евгения", "Кулеш", "Валерьевна", 4, 90000));
+        addEmployee(new Employee("Александр", "Минин", "Александрович", 5, 60000));
+        addEmployee(new Employee("Евгений", "Богданов", "Игнатьевич", 1, 70000));
+        addEmployee(new Employee("Николай", "Савченко", "Юрьевич", 2, 150000));
+        addEmployee(new Employee("Лидия", "Александрова", "Степановна", 3, 200000));
+        addEmployee(new Employee("Наталья", "Кравцова", "Николаевна", 4, 90000));
+        addEmployee(new Employee("Петр", "Иванов", "Васильевич", 5, 70000));
     }
 
-    public static void showEmployeesWithSalaryLessAmount(List<Employee> employees, float amountThreshold) {
+    public static void showEmployeesWithSalaryLessAmount(float amountThreshold) {
 
         for (Employee employee : employees) {
             if (employee.getSalary() < amountThreshold) {
@@ -192,7 +193,7 @@ public class Main {
         }
     }
 
-    public static void showEmployeesWithSalaryMoreEqualAmount(List<Employee> employees, float amountThreshold) {
+    public static void showEmployeesWithSalaryMoreEqualAmount(float amountThreshold) {
         for (Employee employee : employees) {
             if (employee.getSalary() >= amountThreshold) {
                 System.out.printf("ID: %d Имя: %s Фамилия: %s Отчество: %s Зарплата: %f%n", employee.getId(), employee.getName(),
