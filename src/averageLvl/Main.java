@@ -1,11 +1,13 @@
+package averageLvl;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+
 public class Main {
     public static void main(String[] args) {
         List<Employee> employees = new ArrayList<>();
-
         fillDatabase(employees);
 
         showEmployeesWithMinSalaryOfDepartment(employees, 1);
@@ -25,6 +27,18 @@ public class Main {
         showEmployeesWithSalaryMoreEqualAmount(employees, 100000);
     }
 
+    public static void increaseSalaryAllEmployeesOfDepartment(int percentageIncrease, List<Employee> employees, int department) {
+        float increaseAmount;
+
+        for (Employee employee : employees) {
+            if (employee.getDepartment() == department) {
+                increaseAmount = employee.getSalary();
+                increaseAmount += employee.getSalary() / 100 * percentageIncrease;
+                employee.setSalary(increaseAmount);
+            }
+        }
+
+    }
     public static List<Employee> getEmployeesWithMinSalaryOfDepartment(List<Employee> employees, int department) {
         if (!employees.isEmpty()) {
             List<Employee> employeesOfDepartment = new ArrayList<>();
@@ -49,19 +63,6 @@ public class Main {
             System.out.println("База данных пуста");
             return null;
         }
-    }
-
-    public static void increaseSalaryAllEmployeesOfDepartment(int percentageIncrease, List<Employee> employees, int department) {
-        float increaseAmount;
-
-        for (Employee employee : employees) {
-            if (employee.getDepartment() == department) {
-                increaseAmount = employee.getSalary();
-                increaseAmount += employee.getSalary() / 100 * percentageIncrease;
-                employee.setSalary(increaseAmount);
-            }
-        }
-
     }
 
     public static List<Employee> getEmployeesWithMaxSalaryOfDepartment(List<Employee> employees, int department) {
